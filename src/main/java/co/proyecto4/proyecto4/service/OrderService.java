@@ -31,8 +31,8 @@ public class OrderService {
                 order.setId(orderIdMaxima.get().getId() + 1);
         }
         
-        Optional<Order> consulta = orderRepository.getOrder(order.getId());
-        if (consulta.isEmpty()) {
+        Optional<Order> e = orderRepository.getOrder(order.getId());
+        if (e.isEmpty()) {
             return orderRepository.create(order);            
         }else{
             return order;
@@ -67,6 +67,18 @@ public class OrderService {
 
     public List<Order> findByZone(String zona) {
         return orderRepository.findByZone(zona);
+    }
+    
+    public List<Order> ordersSalesManByID(int id) {
+        return orderRepository.ordersSalesManByID(id);
+    }
+    
+    public List<Order> ordersSalesManByDate(String dateStr, int id) {
+        return orderRepository.ordersSalesManByDate(dateStr, id);
+    }
+    
+    public List<Order> ordersSalesManByState(String state, Integer id) {
+        return orderRepository.ordersSalesManByState(state, id);
     }
 
 }

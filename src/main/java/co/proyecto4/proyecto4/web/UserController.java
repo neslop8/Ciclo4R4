@@ -24,42 +24,48 @@ import co.proyecto4.proyecto4.service.UserService;
 @RequestMapping("/api/user")
 @CrossOrigin("*")
 public class UserController {
-    @Autowired
-    private UserService userService;
-     
-    @GetMapping("/all")
-    public List<User> getAll() {
-        return userService.getAll();
-    }
 
+    @Autowired
+    private UserService servicio;
+
+    @GetMapping("/all")
+    public List<User> listAll() {
+        return servicio.listAll();
+    }
+    
     @GetMapping("/{id}")
     public Optional <User> getUser(@PathVariable("id") int id) {
-            return userService.getUser(id);
+        return servicio.getUser(id);
     }
+
+    @GetMapping("/emailexist/{email}")
+    public boolean emailExists(@PathVariable("email") String email) {
+        return servicio.emailExists(email);
+    }
+
+    @GetMapping("/{email}/{password}")
+    public User autenticateUser(@PathVariable("email") String email, @PathVariable("password") String password) {
+        return servicio.autenticateUser(email, password);
+    }
+
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public User create(@RequestBody User user) {
-        return userService.create(user);
+        return servicio.create(user);
     }
-    
+
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
     public User update(@RequestBody User user) {
-        return userService.update(user);
+        return servicio.update(user);
     }
-    @DeleteMapping("/{id}")
+    
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean delete(@PathVariable("id") int id) {
-        return userService.delete(id);
+    public boolean delete(@PathVariable("id") int id){
+        return servicio.delete(id);
     }
-    @GetMapping("/{email}/{password}")
-    public User authenticateUser(@PathVariable("email") String email, @PathVariable("password") String password) {
-        return userService.authenticateUser(email, password);
-    }
-      @GetMapping("/emailexist/{email}")
-    public boolean existeEmail(@PathVariable("email") String email) {
-        return userService.emailExists(email);
-    }
+    
 }
 
 
